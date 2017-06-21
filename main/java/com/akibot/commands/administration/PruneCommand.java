@@ -1,7 +1,7 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Prune
     * Kicks all users who have been offline for a given number of days.

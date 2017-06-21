@@ -1,7 +1,7 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Kick
     * Kicks a user from a server.
@@ -26,7 +26,7 @@ public class KickCommand extends BaseCommand{
         GuildController controller = event.getGuild().getController();
         GuildObject guild = Main.guildMap.get(event.getGuild().getId());
         Main.updateLog(guild.getName(), guild.getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
-        String output = ""; 
+        String output = "";
 
         //Ensures the user is of proper mod level to perform this command
         if(!isMod(guild, getCategory(), event)){

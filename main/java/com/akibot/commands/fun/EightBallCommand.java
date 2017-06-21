@@ -1,7 +1,7 @@
 package com.akibot.commands.fun;
 
 /*
- 	* AkiBot v3.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ 	* AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
  	* 
  	* 8ball
  	* Responds with an 8-ball response, taken at random from the list of responses read in on startup from 8ball.txt

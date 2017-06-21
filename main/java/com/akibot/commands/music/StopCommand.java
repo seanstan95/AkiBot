@@ -1,7 +1,7 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Stop
     * Stops the audio player.

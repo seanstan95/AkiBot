@@ -1,7 +1,7 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Create
     * This is basically 3 commands in one - creating text channels, voice channels, and roles.
@@ -31,7 +31,7 @@ public class CreateCommand extends BaseCommand {
         GuildObject guild = Main.guildMap.get(event.getGuild().getId());
         Main.updateLog(guild.getName(), guild.getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
         final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z0-9-_|]+$");
-        String nameString = "", output = "";
+        String name = "", output = "";
 
         //Ensures the user is of proper mod level to perform this command
         if(!isMod(guild, getCategory(), event)){
@@ -44,8 +44,8 @@ public class CreateCommand extends BaseCommand {
                 return;
             case 1:
                 ArrayList<String> values = new ArrayList<>(Arrays.asList("text", "voice", "role"));
-                if(!values.contains(args[0])){
-                    event.getChannel().sendMessage("No channel name specified - try again.").queue();
+                if(values.contains(args[0])){
+                    event.getChannel().sendMessage("No channel name specified - type `-ab help create` for more info.").queue();
                 }else{
                     event.getChannel().sendMessage("Invalid format! Type `-ab help create` for more info.").queue();
                 }
@@ -53,14 +53,14 @@ public class CreateCommand extends BaseCommand {
             default:
                 for(int i = 1; i < args.length; ++i){
                     if(args[i].contains("|")){
-                        nameString = nameString.concat(args[i]);
+                        name = name.concat(args[i]);
                     }else{
-                        nameString = nameString.concat(args[i]) + "|";
+                        name = name.concat(args[i]) + "|";
                     }
                 }
-                String[] names = nameString.split("\\|");
+                String[] names = name.split("\\|");
 
-                if(NAME_PATTERN.matcher(nameString).find()) {
+                if(NAME_PATTERN.matcher(name).find()) {
                     switch (args[0]) {
                         case "text":
                             for (String channelName : names) {

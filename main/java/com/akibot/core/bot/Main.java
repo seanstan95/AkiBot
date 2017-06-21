@@ -1,7 +1,7 @@
 package com.akibot.core.bot;
 
 /*
-	* AkiBot v3.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+	* AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
 	* 
 	* Main
 	* Mostly startup tasks and variable storage for use from commands.
@@ -110,6 +110,7 @@ public class Main {
         //Administration Commands
         commands.put("ban", new BanCommand());
         commands.put("create", new CreateCommand());
+        commands.put("delete", new DeleteCommand());
         commands.put("leave", new LeaveCommand());
         commands.put("kick", new KickCommand());
         commands.put("mod", new ModCommand());

@@ -1,7 +1,7 @@
 package com.akibot.core.audio;
 
 /*
-    * AkiBot v3.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * TrackScheduler
     * Handles all music scheduling actions.
@@ -17,29 +17,28 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.Color;
-import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
-    private final BlockingQueue<AudioTrack> requestQueue;
+    private final BlockingQueue<AudioTrack> queue;
 
     public TrackScheduler(AudioPlayer player) {
         this.player = player;
-        this.requestQueue = new LinkedBlockingQueue<>();
+        this.queue = new LinkedBlockingQueue<>();
     }
 
     public void addTrack(AudioTrack track){
         if(!player.startTrack(track, true)){
-            requestQueue.offer(track);
+            queue.offer(track);
         }
     }
 
     public void addPlaylist(AudioPlaylist playlist, MessageReceivedEvent event){
         for(AudioTrack track : playlist.getTracks()){
             if(!player.startTrack(track, true)){
-                requestQueue.offer(track);
+                queue.offer(track);
             }
             track.setUserData(new TrackInfo(event.getAuthor().getName(), event.getChannel()));
         }
@@ -47,12 +46,12 @@ public class TrackScheduler extends AudioEventAdapter {
 
     public void nextTrack(){
         //Check if there is a next track, and just return out if not (the player stops automatically).
-        if(requestQueue.peek() == null){
+        if(queue.peek() == null){
             return;
         }
 
-        TrackInfo currentTrackInfo = (TrackInfo)requestQueue.peek().getUserData();
-        player.startTrack(requestQueue.poll(), false);
+        TrackInfo currentTrackInfo = (TrackInfo)queue.peek().getUserData();
+        player.startTrack(queue.poll(), false);
         currentTrackInfo.getChannel().sendMessage(":musical_note: Now Playing: **" + player.getPlayingTrack().getInfo().title + "**, requested by **" + currentTrackInfo.getRequester() + "**").queue();
     }
 
@@ -67,17 +66,17 @@ public class TrackScheduler extends AudioEventAdapter {
         int songCount = 0;
 
         //Checks if the queue is empty before continuing
-        if(requestQueue.peek() == null){
+        if(queue.peek() == null){
             event.getChannel().sendMessage("Queue is empty!").queue();
             return;
         }
 
         //Loops through the queue until song #10 is processed, and stops
-        for(AudioTrack track : requestQueue){
+        for(AudioTrack track : queue){
             ++songCount;
             TrackInfo currentTrackInfo = (TrackInfo)track.getUserData();
-            String title = track.getInfo().title, requester = currentTrackInfo.getRequester();
-            embedBuilder.addField("Song " + songCount, "**Title:** " + title + "\n**Requested by:** " + requester, false);
+            String title = track.getInfo().title;
+            embedBuilder.addField("Song " + songCount, "**Title:** " + title + "\n**Requested by:** " + currentTrackInfo.getRequester(), false);
             if(songCount == 10){
                 break;
             }
@@ -95,7 +94,7 @@ public class TrackScheduler extends AudioEventAdapter {
         //Only the user who requested the track in question can remove it. MUSIC-level mods can override this and force remove any song.
         int i = 0;
 
-        for(AudioTrack track : requestQueue){
+        for(AudioTrack track : queue){
             if(i == trackNumber){
                 if(!((TrackInfo) track.getUserData()).getRequester().equalsIgnoreCase(event.getMember().getEffectiveName())){
                     if(mod){
@@ -105,7 +104,7 @@ public class TrackScheduler extends AudioEventAdapter {
                     }
                     return;
                 }else{
-                    requestQueue.remove(track);
+                    queue.remove(track);
                     event.getChannel().sendMessage("**" + track.getInfo().title + "** removed from Queue.").queue();
                     break;
                 }
@@ -116,15 +115,15 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void resetQueue(MessageReceivedEvent event){
-        requestQueue.clear();
+        queue.clear();
         event.getChannel().sendMessage("Queue emptied.").queue();
     }
 
     public boolean hasNextTrack(){
-        return requestQueue.peek() != null;
+        return queue.peek() != null;
     }
 
     public int getQueueSize(){
-        return requestQueue.size();
+        return queue.size();
     }
 }
