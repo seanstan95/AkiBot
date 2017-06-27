@@ -33,7 +33,7 @@ public class PlayCommand extends BaseCommand {
 	public void action(String[] args, MessageReceivedEvent event) {
 		GuildObject guild = Main.guildMap.get(event.getGuild().getId());
 		Main.updateLog(guild.getName(), guild.getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
-		final Pattern URL_PATTERN = Pattern.compile("^(https?|ftp)://([A-Za-z0-9-._~/?#\\\\[\\\\]:!$&'()*+,;=]+)$");
+		final Pattern URL_PATTERN = Pattern.compile("^(https?|ftp)://([A-Za-z0-9-._~/?#\\[\\]:!$&'()*+,;=]+)$");
 		String input = "";
 
 		//Ensures AkiBot is connected to voice before continuing

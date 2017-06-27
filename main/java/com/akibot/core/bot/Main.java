@@ -40,7 +40,7 @@ import static com.akibot.commands.ModLevel.MUSIC;
 public class Main {
 
     //Bot Info Variables
-    public static final String THUMBNAIL = "http://i.imgur.com/k3zVzOc.png", version = "v3.0";
+    public static final String THUMBNAIL = "http://i.imgur.com/k3zVzOc.png", version = "v3.0.1";
     public static long commandCount = 0, messageCount = 0, startupTime;
     private static String botToken;
 
@@ -65,7 +65,7 @@ public class Main {
 		try{
 			JDA jda = new JDABuilder(AccountType.BOT).addEventListener(new CommandHandler()).setToken(botToken).buildBlocking();
 			jda.setAutoReconnect(true);
-			jda.getPresence().setGame(Game.of(version + ": type -ab help"));
+			jda.getPresence().setGame(Game.of(version + " || -ab help"));
 			startupTime = System.currentTimeMillis() + 14400000;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -95,7 +95,10 @@ public class Main {
         AudioSourceManagers.registerRemoteSources(playerManager);
 
         //Populates 8ball list, parses GuildObject JSON information, and fills command list.
-		eightBallResponses.add(eightBallStream.next().trim());
+		while(eightBallStream.hasNext()){
+			eightBallResponses.add(eightBallStream.next().trim());
+		}
+
 		parseJSON();
 		addCommands();
 
