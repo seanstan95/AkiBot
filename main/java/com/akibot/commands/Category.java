@@ -1,7 +1,7 @@
 package com.akibot.commands;
 
 /*
-    * AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Category
     * Used to set categories for each command (useful for reference in the command list or determining mod status per-category).

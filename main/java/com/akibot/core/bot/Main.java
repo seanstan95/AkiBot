@@ -1,7 +1,7 @@
 package com.akibot.core.bot;
 
 /*
-	* AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+	* AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
 	* 
 	* Main
 	* Mostly startup tasks and variable storage for use from commands.

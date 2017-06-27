@@ -1,7 +1,7 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Delete
     * This is basically 3 commands in one - deleting text/voice channels, and roles.

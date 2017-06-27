@@ -1,7 +1,7 @@
 package com.akibot.commands.info;
 
 /*
- 	* AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ 	* AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
  	* 
  	* Log
  	* Only works when I call the command, and is not listed in commands or help outputs. PMs me the log (useful if I'm away from PC but want the log).

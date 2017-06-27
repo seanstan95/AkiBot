@@ -1,7 +1,7 @@
 package com.akibot.core.audio;
 
 /*
-    * AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * TrackScheduler
     * Handles all music scheduling actions.

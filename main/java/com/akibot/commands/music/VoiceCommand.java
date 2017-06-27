@@ -1,7 +1,7 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Voice
     * Handles AkiBot joining or leaving voice channels. Created to combine join/leave to free up LeaveCommand for leaving guilds instead.

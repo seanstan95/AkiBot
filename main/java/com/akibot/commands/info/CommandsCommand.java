@@ -1,7 +1,7 @@
 package com.akibot.commands.info;
 
 /*
- 	* AkiBot v3.0.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ 	* AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
  	* 
  	* Commands
  	* Returns a list of all bot commands for the given category (listed in the enum Category).
