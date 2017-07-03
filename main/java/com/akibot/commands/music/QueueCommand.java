@@ -1,7 +1,7 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Queue
     * Outputs info about the current queue, up to the first 10 songs (to avoid the embed being too long).

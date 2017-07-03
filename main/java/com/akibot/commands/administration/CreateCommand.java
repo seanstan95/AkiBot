@@ -1,7 +1,7 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Create
     * This is basically 3 commands in one - creating text channels, voice channels, and roles.

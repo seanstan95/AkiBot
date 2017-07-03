@@ -1,7 +1,7 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Song
     * Outputs info about the currently playing song (title, url link, position/duration, and who requested it).

@@ -1,7 +1,7 @@
 package com.akibot.core.bot;
 
 /*
-	* AkiBot v3.0.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+	* AkiBot v3.1.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
 	* 
 	* Main
 	* Mostly startup tasks and variable storage for use from commands.
@@ -40,7 +40,7 @@ import static com.akibot.commands.ModLevel.MUSIC;
 public class Main {
 
     //Bot Info Variables
-    public static final String THUMBNAIL = "http://i.imgur.com/k3zVzOc.png", version = "v3.0.1";
+    public static final String THUMBNAIL = "http://i.imgur.com/k3zVzOc.png", version = "v3.1.0";
     public static long commandCount = 0, messageCount = 0, startupTime;
     private static String botToken;
 
@@ -56,7 +56,7 @@ public class Main {
 	public static File log;
 	public static HashMap<String, BaseCommand> commands = new HashMap<>();
 	public static HashMap<String, GuildObject> guildMap = new HashMap<>();
-    static final ArrayList<String> PM_COMMANDS = new ArrayList<>(Arrays.asList("shutdown", "8ball", "roll", "commands", "help", "log", "server", "status", "user"));
+    static final ArrayList<String> PM_COMMANDS = new ArrayList<>(Arrays.asList("shutdown", "8ball", "roll", "rps", "commands", "help", "log", "server", "status", "user"));
 	
 	public static void main(String[] args){
 		//Opens file input streams and startup api object.
@@ -126,6 +126,7 @@ public class Main {
 		//Fun Commands
 		commands.put("8ball", new EightBallCommand());
 		commands.put("roll", new RollCommand());
+		commands.put("rps", new RpsCommand());
 
         //Info Commands
 	    commands.put("commands", new CommandsCommand());
