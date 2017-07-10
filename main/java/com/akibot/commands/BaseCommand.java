@@ -1,7 +1,7 @@
 package com.akibot.commands;
 
 /*
-    * AkiBot v3.1.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * BaseCommand
     * Abstract class that is extened to all commands. Mainly used as a container for command information such as category, help, etc.

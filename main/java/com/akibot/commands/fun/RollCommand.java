@@ -1,7 +1,7 @@
 package com.akibot.commands.fun;
 
 /*
- 	* AkiBot v3.1.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ 	* AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
  	* 
  	* Roll
  	* Returns a random value (1-6 based on nextInt()), simulating a dice roll (up to 100 times per command) and displaying the total/average.
@@ -12,6 +12,7 @@ import com.akibot.commands.BaseCommand;
 import com.akibot.core.bot.Main;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 import static com.akibot.commands.Category.FUN;
@@ -54,7 +55,8 @@ public class RollCommand extends BaseCommand {
 					roll = rng.nextInt(6)+1;
 					total += roll;
 				}
-				double average = total / roll;
+				DecimalFormat format = new DecimalFormat("#.##");
+				String average = format.format(total / roll);
 
 				event.getChannel().sendMessage("You rolled " + (int)roll + " times. **Total:** " + (int)total + " **Average:** " + average).queue();
 				return;

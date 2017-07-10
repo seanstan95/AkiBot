@@ -1,7 +1,7 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.1.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Seek
     * Skips to the given time in the playing track. Restricted to MUSIC-level mods because it would be an easy way to get around skip being restricted as well.

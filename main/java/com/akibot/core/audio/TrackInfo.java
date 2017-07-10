@@ -1,7 +1,7 @@
 package com.akibot.core.audio;
 
 /*
-    * AkiBot v3.1.0 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * TrackInfo
     * Used in setting user data for Audio Tracks. Contains username of requester and the channel associated to it.
