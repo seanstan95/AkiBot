@@ -1,7 +1,7 @@
 package com.akibot.commands.info;
 
 /*
-    * AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Status
     * Outputs information about the bot's current status.
@@ -32,7 +32,7 @@ public class StatusCommand extends BaseCommand {
 
         switch(args.length){
             case 0:
-                //Seems silly just immediately passing off to  embedOutput, but keeps the calculations out of the main action() method
+                //Seems silly just immediately passing off to embedOutput, but keeps the calculations out of the main action() method
                 embedOutput(event);
                 return;
             default:
@@ -47,15 +47,9 @@ public class StatusCommand extends BaseCommand {
         String hours = Long.toString(elapsedTime/3600000), minutes = Long.toString((elapsedTime/60000)%60), seconds = Long.toString((elapsedTime/1000)%60);
 
         //Padding for output, if necessary.
-        if(Integer.parseInt(hours) < 10){
-            hours = "0" + hours;
-        }
-        if(Integer.parseInt(minutes) < 10){
-            minutes = "0" + minutes;
-        }
-        if(Integer.parseInt(seconds) < 10){
-            seconds = "0" + seconds;
-        }
+        hours = (Integer.parseInt(hours) < 10) ? "0" + hours : hours;
+        minutes = (Integer.parseInt(minutes) < 10) ? "0" + minutes : minutes;
+        seconds = (Integer.parseInt(seconds) < 10) ? "0" + seconds : seconds;
 
         embedBuilder.setAuthor("AkiBot " + Main.version, null, null);
         embedBuilder.setColor(Color.decode("#9900CC"));

@@ -1,7 +1,7 @@
 package com.akibot.commands.info;
 
 /*
-    * AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * ServerInfo
     * Outputs relevant information about the server.
@@ -27,12 +27,11 @@ public class ServerCommand extends BaseCommand {
 
     public void action(String[] args, MessageReceivedEvent event) {
         Main.updateLog(event.getGuild().getName(), event.getGuild().getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
-        List<Role> roleList;
         String roles = "";
 
         switch(args.length){
             case 0:
-                roleList = event.getGuild().getRoles();
+                List<Role> roleList = event.getGuild().getRoles();
                 for(Role role : roleList){
                     //Skips the @everyone role in output
                     if(!role.getName().equalsIgnoreCase("@everyone")){

@@ -1,7 +1,7 @@
 package com.akibot.commands.music;
 
 /*
-	* AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+	* AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
 	*
 	* Play
 	* Queues a song or playlist to be played by the guild's AudioPlayer. Also resumes the player if paused/stopped.

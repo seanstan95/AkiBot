@@ -1,7 +1,7 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Create
     * This is basically 3 commands in one - creating text channels, voice channels, and roles.
@@ -52,11 +52,7 @@ public class CreateCommand extends BaseCommand {
                 return;
             default:
                 for(int i = 1; i < args.length; ++i){
-                    if(args[i].contains("|")){
-                        name = name.concat(args[i]);
-                    }else{
-                        name = name.concat(args[i]) + "|";
-                    }
+                    name = (args[i].contains("|")) ? name.concat(args[i]) : name.concat(args[i]) + "|";
                 }
                 String[] names = name.split("\\|");
 

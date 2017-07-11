@@ -1,7 +1,7 @@
 package com.akibot.commands.fun;
 
 /*
- 	* AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ 	* AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
  	* 
  	* Roll
  	* Returns a random value (1-6 based on nextInt()), simulating a dice roll (up to 100 times per command) and displaying the total/average.

@@ -1,7 +1,7 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.1 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Unmute
     * Unmutes a user in voice.
