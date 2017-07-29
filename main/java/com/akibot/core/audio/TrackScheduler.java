@@ -96,9 +96,11 @@ public class TrackScheduler extends AudioEventAdapter {
 
         for(AudioTrack track : queue){
             if(i == trackNumber){
-                if(!((TrackInfo) track.getUserData()).getRequester().equalsIgnoreCase(event.getMember().getEffectiveName())){
+                if(!((TrackInfo) track.getUserData()).getRequester().equalsIgnoreCase(event.getAuthor().getName())){
                     if(mod){
+                        queue.remove(track);
                         event.getChannel().sendMessage("**" + track.getInfo().title + "** removed by mod override.").queue();
+                        break;
                     }else{
                         event.getChannel().sendMessage("Sorry, only **" + ((TrackInfo)track.getUserData()).getRequester() + "** can remove this track.").queue();
                     }

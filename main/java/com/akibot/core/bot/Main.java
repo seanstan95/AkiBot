@@ -187,9 +187,9 @@ public class Main {
 	}
 
 	public static void updateGuilds(boolean leave, String name, String id){
-		//If the bot has left a server, update the list of GuildObjects before updating Guilds.json
+		//If the bot has left a server, update the list of GuildObjects before updating Guilds.txt
 		if(leave){
-			System.out.println("Leaving: " + name + " (" + id + ")");
+			System.out.printf("Leaving: %s (%s)", name, id);
 			if(guildMap.containsKey(id)){
 				guildMap.remove(id);
 			}
