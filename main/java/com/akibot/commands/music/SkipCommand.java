@@ -1,7 +1,7 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.3 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Skip
     * Skips the current track and loads the next song in the queue.

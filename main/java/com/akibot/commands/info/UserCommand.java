@@ -1,7 +1,7 @@
 package com.akibot.commands.info;
 
 /*
-    * AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.3 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * User
     * Returns relevant information about the @mentioned user(s).

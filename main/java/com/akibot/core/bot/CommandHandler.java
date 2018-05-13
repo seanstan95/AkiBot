@@ -1,7 +1,7 @@
 package com.akibot.core.bot;
 
 /*
-    * AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.3 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * CommandHandler
     * Handles the process of picking up a message, parsing it, and verifying for command existence.

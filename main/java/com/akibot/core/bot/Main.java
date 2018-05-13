@@ -1,7 +1,7 @@
 package com.akibot.core.bot;
 
 /*
-	* AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+	* AkiBot v3.1.3 by PhoenixAki: music + moderation bot for usage in Discord servers.
 	* 
 	* Main
 	* Mostly startup tasks and variable storage for use from commands.
@@ -40,7 +40,7 @@ import static com.akibot.commands.ModLevel.MUSIC;
 public class Main {
 
     //Bot Info Variables
-    public static final String THUMBNAIL = "http://i.imgur.com/k3zVzOc.png", version = "v3.1.2";
+    public static final String THUMBNAIL = "http://i.imgur.com/k3zVzOc.png", version = "v3.1.3";
     public static long commandCount = 0, messageCount = 0, startupTime;
     private static String botToken;
 

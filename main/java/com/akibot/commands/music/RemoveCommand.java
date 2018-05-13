@@ -1,7 +1,7 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.3 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Remove
     * Removes a track from the queue, based on its position in the queue. Only the user who requested a song can remove it (or a mod override).

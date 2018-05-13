@@ -1,7 +1,7 @@
 package com.akibot.commands.info;
 
 /*
-    * AkiBot v3.1.2 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.3 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Status
     * Outputs information about the bot's current status.
