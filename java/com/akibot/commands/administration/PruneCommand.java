@@ -1,10 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Prune
     * Kicks all users who have been offline for a given number of days.
+    * Takes in format -ab prune <days>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -17,7 +18,7 @@ import static com.akibot.commands.Category.ADMIN;
 
 public class PruneCommand extends BaseCommand {
     public PruneCommand(){
-        super(ADMIN, "`prune` - Kicks inactive users from the server.", "`prune days_here`: Kicks users in the server who have been offline for `days_here` days or more.", "Prune");
+        super(ADMIN, "`prune` - Kicks inactive users from the server.", "`prune <days>`: Kicks users in the server who have been offline for at least the given number of days.", "Prune");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

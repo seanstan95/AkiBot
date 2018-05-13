@@ -1,11 +1,11 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Remove
     * Removes a track from the queue, based on its position in the queue. Only the user who requested a song can remove it (or a mod override).
-    * Takes in format -ab remove trackNumber
+    * Takes in format -ab remove <trackNumber>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -18,7 +18,7 @@ import static com.akibot.commands.Category.MUSIC;
 
 public class RemoveCommand extends BaseCommand {
     public RemoveCommand(){
-        super(MUSIC, "`remove` - Removes a track from the queue.", "`remove track_number`: Removes a track from the queue.\n\nOnly the user who requested a song is able to remove it.\nUsers with `MUSIC`-level mod privelages can force remove any song.", "Remove");
+        super(MUSIC, "`remove` - Removes a track from the queue.", "`remove <trackNumber>`: Removes a track from the queue.\n\nOnly the user who requested a song is able to remove it.\nUsers with `MUSIC`-level mod privileges can force remove any song.", "Remove");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Unmute
     * Unmutes a user in voice.
-    * Takes in format -ab unmute @userMentionsHere
+    * Takes in format -ab <unmute> <@user>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -20,7 +20,7 @@ import static com.akibot.commands.Category.ADMIN;
 
 public class UnmuteCommand extends BaseCommand {
     public UnmuteCommand(){
-        super(ADMIN, "`unmute` - Unmutes a user in voice.", "`unmute @userMentionsHere`: Unmutes the mentioned users, if they are in voice. To mute a user, use `-ab mute`.", "Unmute");
+        super(ADMIN, "`unmute` - Unmutes a user in voice.", "`unmute <@user>`: Unmutes the mentioned user(s), if they are in voice. To mute a user, use `-ab mute`.", "Unmute");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

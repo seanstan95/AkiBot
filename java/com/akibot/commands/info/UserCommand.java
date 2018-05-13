@@ -1,11 +1,11 @@
 package com.akibot.commands.info;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * User
     * Returns relevant information about the @mentioned user(s).
-    * Takes in format !userinfo, !userinfo mention_users_here, and !userinfo help
+    * Takes in format -ab user <@user>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -21,7 +21,7 @@ import static com.akibot.commands.Category.INFO;
 
 public class UserCommand extends BaseCommand {
     public UserCommand(){
-        super(INFO, "`user` - Outputs info about the mentioned user(s).", "`user @userMentionHere`: Outputs info about the mentioned user(s).", "User");
+        super(INFO, "`user` - Outputs info about the mentioned user(s).", "`user <@user>`: Outputs info about the mentioned user(s).", "User");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

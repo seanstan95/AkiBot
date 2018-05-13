@@ -1,11 +1,11 @@
 package com.akibot.commands.info;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Help
     * Central command for handling help values for commands. Passing no command name will return a generalized introduction to AkiBot and its functions.
-    * Takes in format -ab help and -ab help commandName
+    * Takes in format -ab help <commandName>
  */
 
 import com.akibot.commands.BaseCommand;

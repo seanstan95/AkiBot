@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Mute
     * Mutes a user that is connected to a voice channel.
-    * Takes in format -ab mute @userMentionsHere
+    * Takes in format -ab mute <@user>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -20,7 +20,7 @@ import static com.akibot.commands.Category.ADMIN;
 
 public class MuteCommand extends BaseCommand {
     public MuteCommand(){
-        super(ADMIN, "`mute` - Mutes a user in voice.", "`mute @userMentionsHere`: Mutes the @mentioned users, if they are connected to voice.\nTo unmute a user, use `-ab unmute`.", "Mute");
+        super(ADMIN, "`mute` - Mutes a user in voice.", "`mute <@user>`: Mutes the mentioned user(s), if they are connected to voice.\nTo unmute a user, use `-ab unmute`.", "Mute");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

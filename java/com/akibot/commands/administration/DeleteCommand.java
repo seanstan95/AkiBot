@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Delete
     * This is basically 3 commands in one - deleting text/voice channels, and roles.
-    * Takes in format -ab delete text/voice/role nameHere
+    * Takes in format -ab delete <text/voice/role> <nameHere>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -20,7 +20,7 @@ import static com.akibot.commands.Category.ADMIN;
 
 public class DeleteCommand extends BaseCommand {
     public DeleteCommand(){
-        super(ADMIN, "`delete` - Deletes a text/voice channel, or role.", "`delete text/voice/role nameHere`: Deletes the given text/voice channel, or role." +
+        super(ADMIN, "`delete` - Deletes a text/voice channel, or role.", "`delete <text/voice/role> <nameHere>`: Deletes the given text/voice channel, or role." +
                           "\n\nThe delete request can not be called in the channel you wish to delete.\nIf there are multiple channels/roles with the same name, AkiBot will delete the first one by default.", "Delete");
     }
 

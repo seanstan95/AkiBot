@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Ban
     * Bans a user from this server.
-    * Takes in format -ab ban @userMentionsHere
+    * Takes in format -ab ban <@user>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -19,7 +19,7 @@ import static com.akibot.commands.Category.ADMIN;
 
 public class BanCommand extends BaseCommand {
     public BanCommand(){
-        super(ADMIN, "`ban` - Bans a user.", "`ban @userMentionsHere`: Bans the @mentioned user(s) from this server.", "Ban");
+        super(ADMIN, "`ban` - Bans a user.", "`ban <@user>`: Bans the @mentioned user(s) from this server.", "Ban");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

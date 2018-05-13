@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Kick
     * Kicks a user from a server.
-    * Takes in format -ab kick @userMentionsHere
+    * Takes in format -ab kick <@user>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -19,7 +19,7 @@ import static com.akibot.commands.Category.ADMIN;
 
 public class KickCommand extends BaseCommand{
     public KickCommand(){
-        super(ADMIN, "`kick` - Kicks a user.", "`kick @userMentionsHere`: Kicks the @mentioned user(s) from this server.", "Kick");
+        super(ADMIN, "`kick` - Kicks a user.", "`kick <@user>`: Kicks the @mentioned user(s) from this server.", "Kick");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

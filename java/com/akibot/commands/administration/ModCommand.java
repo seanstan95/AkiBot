@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Mod
     * This is basically 3 commands in one - adding/removing mod status for a user, and listing all the mods for this server.
-    * Takes in format -ab mod add modLevel @userMentionsHere, -ab mod remove @userMentionsHere, and -ab mod list
+    * Takes in format -ab mod <add/remove/list> <modLevel> <@user>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -21,7 +21,7 @@ import static com.akibot.commands.ModLevel.MUSIC;
 
 public class ModCommand extends BaseCommand {
     public ModCommand(){
-        super(ADMIN, "`mod` - Manages AkiBot mods for this server.", "`mod add/remove modLevel @userMentionsHere`: Adds/removes the @mentioned users with the given modLevel. Valid mod levels are `music` and `full`\n\n" +
+        super(ADMIN, "`mod` - Manages AkiBot mods for this server.", "`mod <add/remove/list> <modLevel> <@user>`: Adds/removes the @mentioned users with the given modLevel, or lists the current mods. Valid mod levels are `music` and `full`\n\n" +
                 "`music` mod level grants access to certain music commands but not administration commands.\n`full` mod level grants full access to all commands.\n\nTo change a pre-existing Mod's level, use the add command with the new modLevel." +
                 "\n\n`mod list`: Lists all the AkiBot mods in this server, and their associated mod level.", "Mod");
     }

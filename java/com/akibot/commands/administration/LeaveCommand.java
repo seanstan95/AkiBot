@@ -1,7 +1,7 @@
 package com.akibot.commands.administration;
 
 /*
-	* AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+	* AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
 	*
 	* Leave
 	* Makes AkiBot leave a server.

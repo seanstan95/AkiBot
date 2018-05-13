@@ -1,11 +1,11 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Voice
     * Handles AkiBot joining or leaving voice channels. Created to combine join/leave to free up LeaveCommand for leaving guilds instead.
-    * Takes in format -ab voice join and -ab voice leave
+    * Takes in format -ab voice <join/leave>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -17,7 +17,7 @@ import static com.akibot.commands.Category.MUSIC;
 
 public class VoiceCommand extends BaseCommand {
     public VoiceCommand(){
-        super(MUSIC, "`voice` - Controls AkiBot joining/leaving voice.", "`voice join`: Summons AkiBot to a voice channel.\n`voice leave`: Makes AkiBot leave its voice channel.", "Voice");
+        super(MUSIC, "`voice` - Controls AkiBot joining/leaving voice.", "`voice <join/leave>`: Summons or dismisses AkiBot to/from a voice channel.", "Voice");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

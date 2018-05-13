@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Create
     * This is basically 3 commands in one - creating text channels, voice channels, and roles.
-    * Takes in format -ab create text nameHere, -ab create voice nameHere, and -ab create role nameHere
+    * Takes in format -ab create <text/voice/role> <nameHere>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -22,7 +22,7 @@ import static com.akibot.commands.Category.ADMIN;
 
 public class CreateCommand extends BaseCommand {
     public CreateCommand(){
-        super(ADMIN, "`create` - Creates a new Text/Voice channel or role.", "`create text/voice/role nameHere`: Creates a new text/voice channel, or role, with the given name." +
+        super(ADMIN, "`create` - Creates a new Text/Voice channel or role.", "`create <text/voice/role> <nameHere>`: Creates a new text/voice channel, or role, with the given name." +
                                "\n\n**Note**: Names must be alphanumeric (A-Z, 0-9) and - or _ only." + "\nYou can create multiple channels/roles per command by separating them with | (if separated with spaces, AkiBot will assume they are separate channels/roles)." , "Create");
     }
 

@@ -1,11 +1,11 @@
 package com.akibot.commands.fun;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Rock
     * Plays a round of rock paper scissors with AkiBot.
-    * Takes in format -ab rps rock/paper/scissors
+    * Takes in format -ab rps <rock/paper/scissors>
 */
 
 import com.akibot.commands.BaseCommand;
@@ -18,7 +18,7 @@ import static com.akibot.commands.Category.FUN;
 
 public class RpsCommand extends BaseCommand {
     public RpsCommand(){
-        super(FUN, "`rps` - Plays a round of rock paper scissors.", "`rps rock/paper/scissors`: Plays a round of rock paper scissors with me.", "Rps");
+        super(FUN, "`rps` - Plays a round of rock paper scissors.", "`rps <rock/paper/scissors>`: Plays a round of rock paper scissors with me.", "Rps");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

@@ -1,12 +1,12 @@
 package com.akibot.commands.music;
 
 /*
-	* AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+	* AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
 	*
 	* Play
 	* Queues a song or playlist to be played by the guild's AudioPlayer. Also resumes the player if paused/stopped.
 	* Allows links from YouTube, SoundCloud, BandCamp, and live Twitch streams.
-	* Takes in format -ab play, -ab play linkHere, and -ab play searchTermsHere
+	* Takes in format -ab play <link/searchTerms>
  */
 
 import com.akibot.core.audio.TrackInfo;
@@ -27,7 +27,7 @@ import static com.akibot.commands.Category.MUSIC;
 
 public class PlayCommand extends BaseCommand {
 	public PlayCommand() {
-		super(MUSIC, "`play` - Queues a track for playback. Unpauses the player if paused.", "`play`: Resumes the player if previously paused/stopped.\n`play linkHere`: Queues the song. If this is not a direct video link, AkiBot will search youtube and queue the first result.", "Play");
+		super(MUSIC, "`play` - Queues a track for playback. Unpauses the player if paused.", "`play`: Resumes the player if previously paused/stopped.\n`play <link/searchTerms>`: Queues the song if directly linked, or searches youtube and queues the first result.", "Play");
 	}
 
 	public void action(String[] args, MessageReceivedEvent event) {

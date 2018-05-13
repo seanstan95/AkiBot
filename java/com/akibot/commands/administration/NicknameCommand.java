@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Nickname
     * Forces a nickname on user(s) in this server.
-    * Takes in format -ab nickname newName @userMentionsHere
+    * Takes in format -ab nickname <newNickname> <@user>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -20,7 +20,7 @@ import static com.akibot.commands.Category.ADMIN;
 
 public class NicknameCommand extends BaseCommand {
     public NicknameCommand(){
-        super(ADMIN, "`nickname` - Nicknames a user.", "`nickname newName @userMentionsHere`: Forces a new nickname onto the @mentioned user(s).", "Nickname");
+        super(ADMIN, "`nickname` - Nicknames a user.", "`nickname <newNickname> <@user>`: Forces a new nickname onto the mentioned user(s).", "Nickname");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

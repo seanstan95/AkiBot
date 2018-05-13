@@ -1,11 +1,11 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Queue
     * Outputs info about the current queue, up to the first 10 songs (to avoid the embed being too long).
-    * Takes in format -ab queue and -ab queue reset
+    * Takes in format -ab queue <reset>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -18,7 +18,7 @@ import static com.akibot.commands.Category.MUSIC;
 
 public class QueueCommand extends BaseCommand {
     public QueueCommand(){
-        super(MUSIC, "`queue` - Displays info about songs in the queue.", "`queue`: Displays info for (up to) the first 10 songs in the queue.\n`queue reset`: **MUSIC-level mods only** Empties the queue.", "Queue");
+        super(MUSIC, "`queue` - Displays info about songs in the queue.", "`queue`: Displays info for (up to) the first 10 songs in the queue.\n`queue <reset>`: **MUSIC-level mods only** Empties the queue.", "Queue");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

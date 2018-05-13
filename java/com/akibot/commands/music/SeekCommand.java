@@ -1,11 +1,11 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Seek
     * Skips to the given time in the playing track. Restricted to MUSIC-level mods because it would be an easy way to get around skip being restricted as well.
-    * Takes in format -ab seek mm:ss
+    * Takes in format -ab seek <mm:ss>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -19,7 +19,7 @@ import static com.akibot.commands.Category.MUSIC;
 
 public class SeekCommand extends BaseCommand {
     public SeekCommand(){
-        super(MUSIC, "`seek` - Skips to the given time in the playing track.", "`seek mm:ss`: Skips to the specified position in the song.\n**Restricted to users with `MUSIC`-level mod privileges.**\nIf the given position is less than 00:00, the track just restarts at 00:00.\nIf the given position is after the end of the track, the track is skipped.", "Seek");
+        super(MUSIC, "`seek` - Skips to the given time in the playing track.", "`seek <mm:ss>`: Skips to the specified position in the song.\n**Restricted to users with `MUSIC`-level mod privileges.**\nIf the given position is less than 00:00, the track restarts at 00:00.\nIf the given position is after the end of the track, the track is skipped.", "Seek");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

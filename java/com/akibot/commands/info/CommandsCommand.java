@@ -1,11 +1,11 @@
 package com.akibot.commands.info;
 
 /*
- 	* AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ 	* AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
  	* 
  	* Commands
  	* Returns a list of all bot commands for the given category (listed in the enum Category).
- 	* Takes in format -ab commands admin/fun/info/music
+ 	* Takes in format -ab commands <admin/fun/info/music>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -22,7 +22,7 @@ import static com.akibot.commands.Category.INFO;
 
 public class CommandsCommand extends BaseCommand {
 	public CommandsCommand(){
-		super(INFO, "`commands` - Returns list of commands.", "`commands admin/fun/info/music`: Displays a list of admin/fun/info/music commands.", "Commands");
+		super(INFO, "`commands` - Returns list of commands.", "`commands <admin/fun/info/music>`: Displays a list of admin/fun/info/music commands.", "Commands");
 	}
 
 	public void action(String[] args, MessageReceivedEvent event) {

@@ -1,11 +1,11 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
     *
     * Volume
     * Displays the current bot volume (default is set to 35), or changes to the given value.
-    * Takes in format -ab volume and -ab volume newVolume
+    * Takes in format -ab volume <newVolume>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -17,7 +17,7 @@ import static com.akibot.commands.Category.MUSIC;
 
 public class VolumeCommand extends BaseCommand {
     public VolumeCommand(){
-        super(MUSIC, "`volume` - Changes the current volume.", "`volume`: Displays the current volume.\n`volume newVolume`: Sets the volume to this value (must be 1-100).", "Volume");
+        super(MUSIC, "`volume` - Changes the current volume.", "`volume <newVolume>`: Displays the current volume, or updates the current volume (must be 1-100).", "Volume");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {

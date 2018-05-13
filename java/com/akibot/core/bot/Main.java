@@ -1,7 +1,7 @@
 package com.akibot.core.bot;
 
 /*
-	* AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+	* AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
 	* 
 	* Main
 	* Mostly startup tasks and variable storage for use from commands.
@@ -39,7 +39,7 @@ import static com.akibot.commands.ModLevel.MUSIC;
 public class Main {
 
     //Bot Info Variables
-    public static final String THUMBNAIL = "http://i.imgur.com/k3zVzOc.png", version = "v3.1.4";
+    public static final String THUMBNAIL = "http://i.imgur.com/k3zVzOc.png", version = "v3.1.5";
     public static long commandCount = 0, messageCount = 0, startupTime;
     private static String botToken;
 
@@ -64,7 +64,7 @@ public class Main {
 		try{
 			JDA jda = new JDABuilder(AccountType.BOT).addEventListener(new com.akibot.core.bot.CommandHandler()).setToken(botToken).buildBlocking();
 			jda.setAutoReconnect(true);
-			jda.getPresence().setGame(Game.of(Game.GameType.DEFAULT, "AkiBot 3.1.4 | -ab help"));
+			jda.getPresence().setGame(Game.of(Game.GameType.DEFAULT, "AkiBot 3.1.5 | -ab help"));
 			startupTime = System.currentTimeMillis() + 14400000;
 		}catch(Exception e){
 			e.printStackTrace();

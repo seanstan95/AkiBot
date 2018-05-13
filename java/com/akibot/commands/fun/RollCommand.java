@@ -1,11 +1,11 @@
 package com.akibot.commands.fun;
 
 /*
- 	* AkiBot v3.1.4 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ 	* AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
  	* 
  	* Roll
  	* Returns a random value (1-6 based on nextInt()), simulating a dice roll (up to 100 times per command) and displaying the total/average.
- 	* Takes in format -ab roll numberHere
+ 	* Takes in format -ab roll <number>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -19,7 +19,7 @@ import static com.akibot.commands.Category.FUN;
 
 public class RollCommand extends BaseCommand {
 	public RollCommand(){
-		super(FUN, "`roll` - Rolls a 6-sided dice.", "`roll numberHere`: Rolls a dice, and displays the total/average.\n\nIf no number is passed, only one roll will happen.", "Roll");
+		super(FUN, "`roll` - Rolls a 6-sided dice.", "`roll <number>`: Rolls a dice, and displays the total/average.\n\nIf no number is given, only one roll will happen.", "Roll");
 	}
 
 	public void action(String[] args, MessageReceivedEvent event) {
