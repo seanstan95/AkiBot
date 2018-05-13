@@ -14,7 +14,7 @@ Please contact me on Discord at Phoenix#0353 if you would like me to turn the bo
 AkiBot's commands can be summarized into 4 categories: Administration, Fun, Information, and Music. All commands to the bot are prefaced 
 by the phrase "-ab", or by saying @AkiBot in place of "-ab".
 
-#### Administration (requires "Full" mod level)
+### Administration (requires "Full" mod level)
 **ban [@user]**: Bans the given user from the current server.
 
 **create [text/voice/role] [name]**: Creates a text, voice, or role with the given name.
@@ -28,7 +28,7 @@ by the phrase "-ab", or by saying @AkiBot in place of "-ab".
 **mod [add/remove/list] [music/full] [@user]**: Adds/removes a mod to the bot, or lists the current mods. Music mod level is required to 
 do music commands; Full mod level is required to do administration commands.
 
-**mute <@user>**: Mutes the given user in a voice channel.
+**mute [@user]**: Mutes the given user in a voice channel.
 
 **nickname [newNickname] [@user]**: Forces the given nickname on the given user.
   
@@ -36,14 +36,14 @@ do music commands; Full mod level is required to do administration commands.
   
 **unmute [@user]**: Unmutes the given user in a voice channel.
 
-#### Fun
+### Fun
 **8ball [message]**: Returns a random result simulating an 8-ball to the given message.
   
 **roll [number]**: Rolls a 6-sided dice a given number of times (defaults to once if no number is given).
   
 **rps [rock/paper/scissors]**: Plays a game of Rock, Paper, Scissors with AkiBot.
 
-#### Info
+### Info
 **commands [admin/fun/info/music]**: Prints a list of commands on a per-category basis.
 
 **help [commandName]**: Prints the help text for a given command.
@@ -54,7 +54,7 @@ do music commands; Full mod level is required to do administration commands.
 
 **user [@user]**: Prints information about the given user.
 
-#### Music (some commands require "Music" or "Full" mod level)
+### Music (some commands require "Music" or "Full" mod level)
 **pause**: Pauses a currently playing track.
 
 **play [link/searchTerms]**: Unpauses a track, plays a track via direct link, or searches youtube for a track given search terms.
@@ -69,8 +69,8 @@ do music commands; Full mod level is required to do administration commands.
 
 **song**: Prints information about the currently playing track.
 
-**stopv: Stops the currently playing track.
+**stop**: Stops the currently playing track.
 
 **voice [join/leave]**: Summons or dismisses AkiBot to/from the current voice channel the calling user is in.
 
-**volume <newVolume>**: Changes the volume of the currently playing track to the given new volume.
+**volume [newVolume]**: Changes the volume of the currently playing track to the given new volume.
