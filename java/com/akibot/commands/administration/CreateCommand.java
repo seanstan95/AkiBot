@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
-    *
-    * Create
-    * This is basically 3 commands in one - creating text channels, voice channels, and roles.
-    * Takes in format -ab create <text/voice/role> <nameHere>
+ * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ *
+ * Create
+ * This is basically 3 commands in one - creating text channels, voice channels, and roles.
+ * Takes in format -ab create <text/voice/role> <nameHere>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -21,9 +21,9 @@ import java.util.regex.Pattern;
 import static com.akibot.commands.Category.ADMIN;
 
 public class CreateCommand extends BaseCommand {
-    public CreateCommand(){
+    public CreateCommand() {
         super(ADMIN, "`create` - Creates a new Text/Voice channel or role.", "`create <text/voice/role> <nameHere>`: Creates a new text/voice channel, or role, with the given name." +
-                               "\n\n**Note**: Names must be alphanumeric (A-Z, 0-9) and - or _ only." + "\nYou can create multiple channels/roles per command by separating them with | (if separated with spaces, AkiBot will assume they are separate channels/roles)." , "Create");
+                "\n\n**Note**: Names must be alphanumeric (A-Z, 0-9) and - or _ only." + "\nYou can create multiple channels/roles per command by separating them with | (if separated with spaces, AkiBot will assume they are separate channels/roles).", "Create");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {
@@ -34,29 +34,29 @@ public class CreateCommand extends BaseCommand {
         String name = "", output = "";
 
         //Ensures the user is of proper mod level to perform this command
-        if(!isMod(guild, getCategory(), event)){
+        if (!isMod(guild, getCategory(), event)) {
             return;
         }
 
-        switch(args.length){
+        switch (args.length) {
             case 0:
                 event.getTextChannel().sendMessage("Invalid format! Type `-ab help create` for more info.").queue();
                 return;
             case 1:
                 ArrayList<String> values = new ArrayList<>(Arrays.asList("text", "voice", "role"));
-                if(values.contains(args[0])){
+                if (values.contains(args[0])) {
                     event.getChannel().sendMessage("No channel name specified - type `-ab help create` for more info.").queue();
-                }else{
+                } else {
                     event.getChannel().sendMessage("Invalid format! Type `-ab help create` for more info.").queue();
                 }
                 return;
             default:
-                for(int i = 1; i < args.length; ++i){
+                for (int i = 1; i < args.length; ++i) {
                     name = (args[i].contains("|")) ? name.concat(args[i]) : name.concat(args[i]) + "|";
                 }
                 String[] names = name.split("\\|");
 
-                if(NAME_PATTERN.matcher(name).find()) {
+                if (NAME_PATTERN.matcher(name).find()) {
                     switch (args[0]) {
                         case "text":
                             for (String channelName : names) {

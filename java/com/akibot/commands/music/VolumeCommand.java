@@ -1,11 +1,11 @@
 package com.akibot.commands.music;
 
 /*
-    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
-    *
-    * Volume
-    * Displays the current bot volume (default is set to 35), or changes to the given value.
-    * Takes in format -ab volume <newVolume>
+ * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ *
+ * Volume
+ * Displays the current bot volume (default is set to 35), or changes to the given value.
+ * Takes in format -ab volume <newVolume>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -16,7 +16,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import static com.akibot.commands.Category.MUSIC;
 
 public class VolumeCommand extends BaseCommand {
-    public VolumeCommand(){
+    public VolumeCommand() {
         super(MUSIC, "`volume` - Changes the current volume.", "`volume <newVolume>`: Displays the current volume, or updates the current volume (must be 1-100).", "Volume");
     }
 
@@ -26,27 +26,27 @@ public class VolumeCommand extends BaseCommand {
         int newVolume;
 
         //Ensures AkiBot is connected to voice before continuing
-        if(!isVoiceOk(event.getGuild().getSelfMember().getVoiceState(), event.getMember().getVoiceState(), event.getChannel())){
+        if (!isVoiceOk(event.getGuild().getSelfMember().getVoiceState(), event.getMember().getVoiceState(), event.getChannel())) {
             return;
         }
 
-        switch(args.length){
+        switch (args.length) {
             case 0:
-                event.getChannel().sendMessage("Current volume: " + Integer.toString(guild.getPlayer().getVolume())).queue();
+                event.getChannel().sendMessage("Current volume: " + guild.getPlayer().getVolume()).queue();
                 return;
             case 1:
-                try{
+                try {
                     newVolume = Integer.parseInt(args[0]);
-                }catch(NumberFormatException e){
+                } catch (NumberFormatException e) {
                     event.getChannel().sendMessage("Invalid argument (newVolume must be a number). Type `-ab help volume` for more info.").queue();
                     return;
                 }
 
-                if(newVolume < 1 || newVolume > 100){
+                if (newVolume < 1 || newVolume > 100) {
                     event.getChannel().sendMessage("Invalid argument (newVolume must be 1-100). Type `-ab help volume` for more info.").queue();
-                }else{
+                } else {
                     guild.getPlayer().setVolume(newVolume);
-                    event.getChannel().sendMessage("Volume changed to " + Integer.toString(newVolume)).queue();
+                    event.getChannel().sendMessage("Volume changed to " + newVolume).queue();
                     Main.updateGuilds(false, guild.getName(), guild.getId());
                 }
                 return;

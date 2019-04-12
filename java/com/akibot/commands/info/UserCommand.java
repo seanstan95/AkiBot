@@ -1,11 +1,11 @@
 package com.akibot.commands.info;
 
 /*
-    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
-    *
-    * User
-    * Returns relevant information about the @mentioned user(s).
-    * Takes in format -ab user <@user>
+ * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ *
+ * User
+ * Returns relevant information about the @mentioned user(s).
+ * Takes in format -ab user <@user>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -20,7 +20,7 @@ import java.awt.Color;
 import static com.akibot.commands.Category.INFO;
 
 public class UserCommand extends BaseCommand {
-    public UserCommand(){
+    public UserCommand() {
         super(INFO, "`user` - Outputs info about the mentioned user(s).", "`user <@user>`: Outputs info about the mentioned user(s).", "User");
     }
 
@@ -28,16 +28,16 @@ public class UserCommand extends BaseCommand {
         Main.updateLog(event.getGuild().getName(), event.getGuild().getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
 
         //Reads in all the mentioned users one at a time and embed outputs each one
-        if(event.getMessage().getMentionedUsers().size() > 0){
-            for(User user : event.getMessage().getMentionedUsers()){
+        if (event.getMessage().getMentionedUsers().size() > 0) {
+            for (User user : event.getMessage().getMentionedUsers()) {
                 embedOutput(event, event.getGuild().getMember(user), user);
             }
-        }else{
+        } else {
             event.getChannel().sendMessage("Invalid format! Type `-ab help user` for more info.").queue();
         }
     }
 
-    private void embedOutput(MessageReceivedEvent event, Member member, User user){
+    private void embedOutput(MessageReceivedEvent event, Member member, User user) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setAuthor("AkiBot " + Main.version, null, null);

@@ -1,11 +1,11 @@
 package com.akibot.commands.fun;
 
 /*
- 	* AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- 	* 
- 	* 8ball
- 	* Responds with an 8-ball response, taken at random from the list of responses read in on startup from 8ball.txt
- 	* Takes in format -ab 8ball <message>
+ * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ *
+ * 8ball
+ * Responds with an 8-ball response, taken at random from the list of responses read in on startup from 8ball.txt
+ * Takes in format -ab 8ball <message>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -17,25 +17,23 @@ import java.util.Random;
 import static com.akibot.commands.Category.FUN;
 
 public class EightBallCommand extends BaseCommand {
-    public EightBallCommand(){
+    public EightBallCommand() {
         super(FUN, "`8ball` - Responds with an 8-ball response.", "`8ball <message>`: Responds with an 8-ball response to the message.\n\nIf no message is passed, AkiBot will respond telling you to ask something and try again.", "8Ball");
     }
 
     public void action(String[] args, MessageReceivedEvent event) {
-        if(event.getGuild() != null){
+        if (event.getGuild() != null) {
             Main.updateLog(event.getGuild().getName(), event.getGuild().getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
-        }else{
+        } else {
             Main.updateLog("PM", "PM", event.getAuthor().getName(), getName(), formatTime(null, event));
         }
 
         Random rng = new Random();
 
-        switch(args.length){
-            case 0:
-                event.getChannel().sendMessage("I can't respond to nothing - ask me something next time!").queue();
-                return;
-            default:
-                event.getChannel().sendMessage(Main.eightBallResponses.get(rng.nextInt(Main.eightBallResponses.size()))).queue();
+        if (args.length == 0) {
+            event.getChannel().sendMessage("I can't respond to nothing - ask me something next time!").queue();
+        } else {
+            event.getChannel().sendMessage(Main.eightBallResponses.get(rng.nextInt(Main.eightBallResponses.size()))).queue();
         }
     }
 }

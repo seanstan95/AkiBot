@@ -1,10 +1,10 @@
 package com.akibot.core.audio;
 
 /*
-    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
-    *
-    * AudioPlayerSendHandler
-    * Handles the process of sending audio to the guild's audio player.
+ * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ *
+ * AudioPlayerSendHandler
+ * Handles the process of sending audio to the guild's audio player.
  */
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;

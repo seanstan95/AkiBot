@@ -1,11 +1,11 @@
 package com.akibot.commands.administration;
 
 /*
-    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
-    *
-    * Mute
-    * Mutes a user that is connected to a voice channel.
-    * Takes in format -ab mute <@user>
+ * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ *
+ * Mute
+ * Mutes a user that is connected to a voice channel.
+ * Takes in format -ab mute <@user>
  */
 
 import com.akibot.commands.BaseCommand;
@@ -19,7 +19,7 @@ import net.dv8tion.jda.core.managers.GuildController;
 import static com.akibot.commands.Category.ADMIN;
 
 public class MuteCommand extends BaseCommand {
-    public MuteCommand(){
+    public MuteCommand() {
         super(ADMIN, "`mute` - Mutes a user in voice.", "`mute <@user>`: Mutes the mentioned user(s), if they are connected to voice.\nTo unmute a user, use `-ab unmute`.", "Mute");
     }
 
@@ -30,27 +30,25 @@ public class MuteCommand extends BaseCommand {
         String output = "";
 
         //Ensures the user is of proper mod level to perform this command
-        if(!isMod(guild, getCategory(), event)){
+        if (!isMod(guild, getCategory(), event)) {
             return;
         }
 
-        switch(args.length){
-            case 0:
-                event.getChannel().sendMessage("Invalid format! Type `-ab help mute` for more info.").queue();
-                return;
-            default:
-                if(event.getMessage().getMentionedUsers().size() > 0){
-                    for(User user : event.getMessage().getMentionedUsers()){
-                        Member member = event.getGuild().getMember(user);
-                        if(member.getVoiceState().inVoiceChannel() && !member.getVoiceState().isMuted()){
-                            controller.setMute(member, true).queue();
-                            output = output.concat(", " + member.getEffectiveName());
-                        }
+        if (args.length == 0) {
+            event.getChannel().sendMessage("Invalid format! Type `-ab help mute` for more info.").queue();
+        } else {
+            if (event.getMessage().getMentionedUsers().size() > 0) {
+                for (User user : event.getMessage().getMentionedUsers()) {
+                    Member member = event.getGuild().getMember(user);
+                    if (member.getVoiceState().inVoiceChannel() && !member.getVoiceState().isMuted()) {
+                        controller.setMute(member, true).queue();
+                        output = output.concat(", " + member.getEffectiveName());
                     }
-                    event.getChannel().sendMessage("User(s) " + output.substring(2) + " muted.").queue();
-                }else{
-                    event.getChannel().sendMessage("Invalid format! Type `-ab help mute` for more info.").queue();
                 }
+                event.getChannel().sendMessage("User(s) " + output.substring(2) + " muted.").queue();
+            } else {
+                event.getChannel().sendMessage("Invalid format! Type `-ab help mute` for more info.").queue();
+            }
         }
     }
 }

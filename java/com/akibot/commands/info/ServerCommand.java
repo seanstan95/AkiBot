@@ -1,11 +1,11 @@
 package com.akibot.commands.info;
 
 /*
-    * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
-    *
-    * ServerInfo
-    * Outputs relevant information about the server.
-    * Takes in format -ab server
+ * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
+ *
+ * ServerInfo
+ * Outputs relevant information about the server.
+ * Takes in format -ab server
  */
 
 import com.akibot.commands.BaseCommand;
@@ -21,7 +21,7 @@ import java.util.List;
 import static com.akibot.commands.Category.INFO;
 
 public class ServerCommand extends BaseCommand {
-    public ServerCommand(){
+    public ServerCommand() {
         super(INFO, "`server` - Outputs info about the current server.", "`server`: Outputs info about the current server (channel count, user count, etc.).", "Server");
     }
 
@@ -29,23 +29,21 @@ public class ServerCommand extends BaseCommand {
         Main.updateLog(event.getGuild().getName(), event.getGuild().getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
         String roles = "";
 
-        switch(args.length){
-            case 0:
-                List<Role> roleList = event.getGuild().getRoles();
-                for(Role role : roleList){
-                    //Skips the @everyone role in output
-                    if(!role.getName().equalsIgnoreCase("@everyone")){
-                        roles = roles.concat(", " + role.getName());
-                    }
+        if (args.length == 0) {
+            List<Role> roleList = event.getGuild().getRoles();
+            for (Role role : roleList) {
+                //Skips the @everyone role in output
+                if (!role.getName().equalsIgnoreCase("@everyone")) {
+                    roles = roles.concat(", " + role.getName());
                 }
-                embedOutput(event, roles.substring(2));
-                return;
-            default:
-                event.getChannel().sendMessage("Invalid format! Type `-ab help server` for more info.").queue();
+            }
+            embedOutput(event, roles.substring(2));
+        } else {
+            event.getChannel().sendMessage("Invalid format! Type `-ab help server` for more info.").queue();
         }
     }
 
-    private void embedOutput(MessageReceivedEvent event, String roles){
+    private void embedOutput(MessageReceivedEvent event, String roles) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setAuthor("AkiBot " + Main.version, null, null);
