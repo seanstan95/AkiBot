@@ -1,15 +1,9 @@
 package com.akibot.core.audio;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * AudioPlayerSendHandler
- * Handles the process of sending audio to the guild's audio player.
- */
-
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
-import net.dv8tion.jda.core.audio.AudioSendHandler;
+import net.dv8tion.jda.api.audio.AudioSendHandler;
+import java.nio.ByteBuffer;
 
 public class AudioPlayerSendHandler implements AudioSendHandler {
     private final AudioPlayer audioPlayer;
@@ -24,9 +18,7 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
         return lastFrame != null;
     }
 
-    public byte[] provide20MsAudio() {
-        return lastFrame.data;
-    }
+    public ByteBuffer provide20MsAudio() { return ByteBuffer.wrap(lastFrame.getData()); }
 
     public boolean isOpus() {
         return true;

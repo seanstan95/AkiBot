@@ -1,46 +1,31 @@
 package com.akibot.commands.music;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * Skip
- * Skips the current track and loads the next song in the queue.
- * Takes in format -ab skip
- */
-
 import com.akibot.commands.BaseCommand;
-
-import com.akibot.core.bot.GuildObject;
-import com.akibot.core.bot.Main;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import static com.akibot.commands.Category.MUSIC;
 
 public class SkipCommand extends BaseCommand {
     public SkipCommand() {
-        super(MUSIC, "`skip` - Skips the current track.", "`skip`: Skips the current track.\n**Restricted to users with MUSIC-level mod privileges.**", "Skip");
+        super(MUSIC, "`skip` - Skips the current song.", "`skip`: Skips the current song.", "Skip");
     }
 
-    public void action(String[] args, MessageReceivedEvent event) {
-        GuildObject guild = Main.guildMap.get(event.getGuild().getId());
-        Main.updateLog(guild.getName(), guild.getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
+    public void action(String[] args, GuildMessageReceivedEvent event) {
+        setup(event);
 
         //Ensures AkiBot is connected to voice before continuing
-        if (!isVoiceOk(event.getGuild().getSelfMember().getVoiceState(), event.getMember().getVoiceState(), event.getChannel())) {
-            return;
-        }
-
-        //Ensures the user is of proper mod level to perform this command
-        if (!isMod(guild, getCategory(), event)) {
+        if (!isVoiceOk(event.getGuild().getSelfMember(), event.getMember(), event.getChannel())) {
             return;
         }
 
         if (args.length == 0) {
-            if (guild.getPlayer().getPlayingTrack() == null) {
-                event.getChannel().sendMessage("No track is playing!").queue();
+            if (guildObj.getPlayer().getPlayingTrack() == null) {
+                event.getChannel().sendMessage("No song is playing!").queue();
             } else {
-                guild.getScheduler().nextTrack();
-                event.getChannel().sendMessage("Track skipped.").queue();
+                event.getChannel().sendMessage("Song skipped.").queue();
+                guildObj.getScheduler().nextTrack();
+                if (guildObj.getPlayer().isPaused())
+                    guildObj.getPlayer().setPaused(false);
             }
         } else {
             event.getChannel().sendMessage("Invalid format! Type `-ab help skip` for more info.").queue();

@@ -1,106 +1,74 @@
 package com.akibot.commands.administration;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * Mod
- * This is basically 3 commands in one - adding/removing mod status for a user, and listing all the mods for this server.
- * Takes in format -ab mod <add/remove/list> <modLevel> <@user>
- */
-
 import com.akibot.commands.BaseCommand;
-import com.akibot.commands.ModLevel;
-import com.akibot.core.bot.GuildObject;
 import com.akibot.core.bot.Main;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+
+import java.util.ArrayList;
 
 import static com.akibot.commands.Category.ADMIN;
-import static com.akibot.commands.ModLevel.FULL;
-import static com.akibot.commands.ModLevel.MUSIC;
 
 public class ModCommand extends BaseCommand {
     public ModCommand() {
-        super(ADMIN, "`mod` - Manages AkiBot mods for this server.", "`mod <add/remove/list> <modLevel> <@user>`: Adds/removes the @mentioned users with the given modLevel, or lists the current mods. Valid mod levels are `music` and `full`\n\n" +
-                "`music` mod level grants access to certain music commands but not administration commands.\n`full` mod level grants full access to all commands.\n\nTo change a pre-existing Mod's level, use the add command with the new modLevel." +
-                "\n\n`mod list`: Lists all the AkiBot mods in this server, and their associated mod level.", "Mod");
+        super(ADMIN, "`mod` - Manages AkiBot mods for this server.", "`mod <add/remove/list> <@user>`: " +
+                "Adds/removes the mentioned user as a mod, or lists the current mods.", "Mod");
     }
 
-    public void action(String[] args, MessageReceivedEvent event) {
-        GuildObject guild = Main.guildMap.get(event.getGuild().getId());
-        Main.updateLog(guild.getName(), guild.getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
-        ModLevel modLevel;
+    public void action(String[] args, GuildMessageReceivedEvent event) {
+        setup(event);
         String output = "";
+        guildObj.update(guildControl); //update to ensure only active members are listed
+        ArrayList<String> modList = guildObj.getModList();
 
-        //Ensures the user is of proper mod level to perform this command
-        if (!isMod(guild, getCategory(), event)) {
+        if (!isMod(guildObj, event)) {
             return;
         }
 
-        if (args.length == 0) {
-            event.getChannel().sendMessage("Invalid format! Type `-ab help mod` for more info.").queue();
-        } else {
-            switch (args[0]) {
+        if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
+            for (String modId : guildObj.getModList()) {
+                output = output.concat(", " + guildControl.getMemberById(modId).getUser().getName());
+            }
+            event.getChannel().sendMessage("List of mods:\n" + output.substring(2)).queue();
+        } else if (args.length == 2) {
+            switch (args[0].toLowerCase()) {
                 case "add":
+                    System.out.println(event.getMessage().getMentionedUsers().size());
+                    for (User user : event.getMessage().getMentionedUsers()) {
+                        System.out.println(user.getName());
+                    }
                     if (event.getMessage().getMentionedUsers().size() > 0) {
-                        for (User user : event.getMessage().getMentionedUsers()) {
-                            //Determine the modLevel this user will have
-                            if (args[1].equalsIgnoreCase("music")) {
-                                modLevel = MUSIC;
-                            } else if (args[1].equalsIgnoreCase("full")) {
-                                modLevel = FULL;
-                            } else {
-                                event.getChannel().sendMessage("Invalid format! Type `-ab help mod` for more info.").queue();
-                                return;
-                            }
-
-                            //If the user is already added as a mod and the input modLevel is the same, skip the user. Otherwise, update that user's modLevel to the new one.
-                            if (guild.getModList().containsKey(user.getId())) {
-                                if (guild.getModList().get(user.getId()) != modLevel) {
-                                    guild.changeMod(user.getId(), modLevel, true, false);
-                                    output = output.concat(", " + event.getGuild().getMember(user).getEffectiveName());
-                                } else {
-                                    event.getChannel().sendMessage(event.getGuild().getMember(user).getEffectiveName() + " is already a mod with `" + modLevel.name() + "` mod level.").queue();
-                                    return;
-                                }
-                            } else {
-                                guild.changeMod(user.getId(), modLevel, false, false);
-                                output = output.concat(", " + event.getGuild().getMember(user).getEffectiveName());
-                            }
+                        User newMod = event.getMessage().getMentionedUsers().get(0);
+                        if (!modList.contains(newMod.getId()) && newMod != event.getJDA().getSelfUser()) {
+                            guildObj.addMod(newMod.getId());
+                            event.getChannel().sendMessage("User " + newMod.getName() + " added as a mod.").queue();
+                            Main.updateGuilds(false, null, null);
+                        } else {
+                            event.getChannel().sendMessage(newMod.getName() + " is already a mod.").queue();
                         }
-                        event.getChannel().sendMessage("User(s) " + output.substring(2) + " added as mod(s).").queue();
-                        Main.updateGuilds(false, null, null);
                     } else {
                         event.getChannel().sendMessage("Invalid format! Type `-ab help mod` for more info.").queue();
                     }
                     return;
                 case "remove":
                     if (event.getMessage().getMentionedUsers().size() > 0) {
-                        for (User user : event.getMessage().getMentionedUsers()) {
-                            //Confirms this user is in the mod list. If so, removes them.
-                            if (guild.getModList().containsKey(user.getId())) {
-                                guild.changeMod(user.getId(), null, false, true);
-                                output = output.concat(", " + event.getGuild().getMember(user).getEffectiveName());
-                            } else {
-                                event.getChannel().sendMessage(event.getGuild().getMember(user).getEffectiveName() + " is not a mod.").queue();
-                                return;
-                            }
+                        User removeMod = event.getMessage().getMentionedUsers().get(0);
+                        if (modList.contains(removeMod.getId())) {
+                            guildObj.removeMod(removeMod.getId());
+                            event.getChannel().sendMessage("User(s) " + removeMod.getName() + " removed as mod(s).").queue();
+                            Main.updateGuilds(false, null, null);
+                        } else {
+                            event.getChannel().sendMessage(removeMod.getName() + " is not a mod.").queue();
                         }
-                        event.getChannel().sendMessage("User(s) " + output.substring(2) + " removed from mod list.").queue();
-                        Main.updateGuilds(false, null, null);
                     } else {
                         event.getChannel().sendMessage("Invalid format! Type `-ab help mod` for more info.").queue();
                     }
                     return;
-                case "list":
-                    for (String key : guild.getModList().keySet()) {
-                        output = output.concat(event.getGuild().getMemberById(key).getEffectiveName() + ": " + guild.getModList().get(key).name() + "\n");
-                    }
-                    event.getChannel().sendMessage("List of mods (and their mod level):\n" + output).queue();
-                    return;
                 default:
                     event.getChannel().sendMessage("Invalid format! Type `-ab help mod` for more info.").queue();
             }
+        } else {
+            event.getChannel().sendMessage("Invalid format! Type `-ab help mod` for more info.").queue();
         }
     }
 }

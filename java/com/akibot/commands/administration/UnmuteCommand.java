@@ -1,52 +1,38 @@
 package com.akibot.commands.administration;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * Unmute
- * Unmutes a user in voice.
- * Takes in format -ab <unmute> <@user>
- */
-
 import com.akibot.commands.BaseCommand;
-import com.akibot.core.bot.GuildObject;
-import com.akibot.core.bot.Main;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import static com.akibot.commands.Category.ADMIN;
 
 public class UnmuteCommand extends BaseCommand {
     public UnmuteCommand() {
-        super(ADMIN, "`unmute` - Unmutes a user in voice.", "`unmute <@user>`: Unmutes the mentioned user(s), if they are in voice. To mute a user, use `-ab mute`.", "Unmute");
+        super(ADMIN, "`unmute` - Unmutes a user in voice.", "`unmute <@user>`: Unmutes a mentioned user, " +
+                "if they are connected to voice.\nTo mute a user, use `-ab mute`.", "Unmute");
     }
 
-    public void action(String[] args, MessageReceivedEvent event) {
-        GuildObject guild = Main.guildMap.get(event.getGuild().getId());
-        Main.updateLog(event.getGuild().getName(), event.getGuild().getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
-        String output = "";
+    public void action(String[] args, GuildMessageReceivedEvent event) {
+        setup(event);
 
         //Ensures the user is of proper mod level to perform this command
-        if (!isMod(guild, getCategory(), event)) {
+        if (!isMod(guildObj, event)) {
             return;
         }
 
-        if (args.length == 0) {
+        if (args.length != 1) {
             event.getChannel().sendMessage("Invalid format! Type `-ab help unmute` for more info.").queue();
-        } else {
-            if (event.getMessage().getMentionedUsers().size() > 0) {
-                for (User user : event.getMessage().getMentionedUsers()) {
-                    Member member = event.getGuild().getMember(user);
-                    if (member.getVoiceState().inVoiceChannel() && member.getVoiceState().isMuted()) {
-                        event.getGuild().getController().setMute(member, false).queue();
-                        output = output.concat(", " + member.getEffectiveName());
-                    }
-                }
-                event.getChannel().sendMessage("User(s) " + output.substring(2) + " unmuted.").queue();
+        } else if (event.getMessage().getMentionedUsers().size() > 0) {
+            Member unmute = guildControl.getMember(event.getMessage().getMentionedUsers().get(0));
+            if (unmute.getVoiceState().inVoiceChannel() && unmute.getVoiceState().isGuildMuted()) {
+                unmute.mute(false).queue();
+                event.getChannel().sendMessage("User " + unmute.getEffectiveName() + " unmuted.").queue();
             } else {
-                event.getChannel().sendMessage("Invalid format! Type `-ab help unmute` for more info.").queue();
+                event.getChannel().sendMessage("User " + unmute.getEffectiveName() + " not in voice, or " +
+                        "is not muted.").queue();
             }
+        } else {
+            event.getChannel().sendMessage("Invalid format! Type `-ab help unmute` for more info.").queue();
         }
     }
 }

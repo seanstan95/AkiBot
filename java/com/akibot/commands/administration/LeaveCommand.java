@@ -1,39 +1,29 @@
 package com.akibot.commands.administration;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * Leave
- * Makes AkiBot leave a server.
- * Takes in format -ab leave
- */
-
 import com.akibot.commands.BaseCommand;
-import com.akibot.core.bot.GuildObject;
-import com.akibot.core.bot.Main;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import static com.akibot.commands.Category.ADMIN;
 
 public class LeaveCommand extends BaseCommand {
-    public LeaveCommand() {
-        super(ADMIN, "`leave` - Makes AkiBot leave a server.", "`leave`: Makes AkiBot leave this server.", "Leave");
-    }
+	public LeaveCommand() {
+		super(ADMIN, "`leave` - Makes AkiBot leave a server.", "`leave`: Makes AkiBot " +
+				"leave this server.", "Leave");
+	}
 
-    public void action(String[] args, MessageReceivedEvent event) {
-        GuildObject guild = Main.guildMap.get(event.getGuild().getId());
-        Main.updateLog(guild.getName(), guild.getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
+	public void action(String[] args, GuildMessageReceivedEvent event) {
+		setup(event);
 
-        //Ensures AkiBot is connected to voice before continuing
-        if (!isMod(guild, getCategory(), event)) {
-            return;
-        }
+		//Ensures the user is of proper mod level to perform this command
+		if (!isMod(guildObj, event)) {
+			return;
+		}
 
-        if (args.length == 0) {
-            event.getChannel().sendMessage(":wave: See ya!").complete();
-            event.getGuild().leave().queue();
-        } else {
-            event.getChannel().sendMessage("Invalid format! Type `-ab help leave` for more info.").queue();
-        }
-    }
+		if (args.length == 0) {
+			event.getChannel().sendMessage(":wave: See ya!").complete();
+			event.getGuild().leave().queue();
+		} else {
+			event.getChannel().sendMessage("Invalid format! Type `-ab help leave` for more info.").queue();
+		}
+	}
 }

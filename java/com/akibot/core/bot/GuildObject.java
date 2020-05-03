@@ -1,35 +1,25 @@
 package com.akibot.core.bot;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * GuildObject
- * Every guild AkiBot joins has a GuildObject associated to it.
- * An instance of a GuildObject handles the audio player, list of mods, etc. that are specific to that guild.
- */
-
-import com.akibot.commands.ModLevel;
 import com.akibot.core.audio.AudioPlayerSendHandler;
 import com.akibot.core.audio.TrackScheduler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.HashMap;
+import java.util.ArrayList;
+import net.dv8tion.jda.api.entities.Guild;
 
 public class GuildObject {
     private final AudioPlayer player;
     private final TrackScheduler scheduler;
-    private HashMap<String, ModLevel> modList = new HashMap<>();
-    private String id, name;
+    private ArrayList<String> modList = new ArrayList<>();
+    private String guildId, guildName;
 
-    GuildObject(AudioPlayerManager manager, String guildId, String guildName, HashMap<String, ModLevel> modList, int volume) {
-        player = manager.createPlayer();
+    GuildObject(AudioPlayer player, String guildId, String guildName, ArrayList<String> modList, int volume) {
+        this.player = player;
         scheduler = new TrackScheduler(player);
         player.addListener(scheduler);
-        this.id = guildId;
-        this.name = guildName;
+        this.guildId = guildId;
+        this.guildName = guildName;
         if (modList != null) {
             this.modList = modList;
         }
@@ -44,47 +34,46 @@ public class GuildObject {
         return scheduler;
     }
 
-    public HashMap<String, ModLevel> getModList() {
+    public ArrayList<String> getModList() {
         return modList;
     }
 
     public String getId() {
-        return id;
+        return guildId;
     }
 
     public String getName() {
-        return name;
+        return guildName;
     }
 
     public AudioPlayerSendHandler getSendHandler() {
         return new AudioPlayerSendHandler(player);
     }
 
-    public void changeMod(String id, ModLevel modLevel, boolean change, boolean remove) {
-        //On creation of a Guild Object, the owner is added with FULL access (this is to ensure the owner is always able to add other mods).
-        //change is used to determine if a pre-existing mod's level is being changed.
-        //remove is used to determine if removing a pre-existing mod from the list
-
-        if (change) {
-            modList.remove(id);
-            modList.put(id, modLevel);
-        } else if (remove) {
-            modList.remove(id);
-        } else {
-            modList.put(id, modLevel);
-        }
+    public void addMod(String memberId) {
+        modList.add(memberId);
     }
 
-    JSONObject toJSONObject() {
+    public void removeMod(String memberId) {
+        modList.remove(memberId);
+    }
+
+    public void update(Guild guild) {
+        modList.removeIf(modId -> guild.getMemberById(modId) == null);
+        guildName = guild.getName();
+    }
+
+    JSONObject toJSON() {
         JSONArray mods = new JSONArray();
         JSONObject rootObj = new JSONObject();
 
-        rootObj.put("GuildId", id).put("GuildName", name).put("Volume", player.getVolume());
-
-        for (String key : modList.keySet()) {
-            mods.put(new JSONObject().put("Id", key).put("ModLevel", modList.get(key)));
+        for (String modId : modList) {
+            mods.put(new JSONObject().put("Id", modId));
         }
 
-        return rootObj.put("Mods", mods);
+        return rootObj.put("GuildId", guildId)
+                .put("GuildName", guildName)
+                .put("Volume", player.getVolume())
+                .put("Mods", mods);
     }
 }

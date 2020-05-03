@@ -1,39 +1,47 @@
 package com.akibot.commands.fun;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * 8ball
- * Responds with an 8-ball response, taken at random from the list of responses read in on startup from 8ball.txt
- * Takes in format -ab 8ball <message>
- */
-
 import com.akibot.commands.BaseCommand;
 import com.akibot.core.bot.Main;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import static com.akibot.commands.Category.FUN;
 
 public class EightBallCommand extends BaseCommand {
     public EightBallCommand() {
-        super(FUN, "`8ball` - Responds with an 8-ball response.", "`8ball <message>`: Responds with an 8-ball response to the message.\n\nIf no message is passed, AkiBot will respond telling you to ask something and try again.", "8Ball");
+        super(FUN, "`8ball` - Responds with an 8-ball response.", "`8ball <message>`: " +
+                "Responds with an 8-ball response to the message.", "8ball");
+        fillResponses();
     }
 
-    public void action(String[] args, MessageReceivedEvent event) {
-        if (event.getGuild() != null) {
-            Main.updateLog(event.getGuild().getName(), event.getGuild().getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
-        } else {
-            Main.updateLog("PM", "PM", event.getAuthor().getName(), getName(), formatTime(null, event));
-        }
+    private ArrayList<String> responses = new ArrayList<>();
 
-        Random rng = new Random();
+    public void action(String[] args, GuildMessageReceivedEvent event) {
+        Main.updateLog(Main.guildMap.get(event.getGuild().getId()),
+                event.getAuthor().getName(), getName(), formatTime(null, event));
 
         if (args.length == 0) {
-            event.getChannel().sendMessage("I can't respond to nothing - ask me something next time!").queue();
+            event.getChannel().sendMessage("I can't respond to nothing...").queue();
         } else {
-            event.getChannel().sendMessage(Main.eightBallResponses.get(rng.nextInt(Main.eightBallResponses.size()))).queue();
+            int num = new Random().nextInt(responses.size());
+            event.getChannel().sendMessage(responses.get(num)).queue();
+        }
+    }
+
+    private void fillResponses() {
+        try {
+            Scanner stream = new Scanner(new File("resources\\8Ball.txt")).useDelimiter("\\n");
+            while (stream.hasNext()) {
+                responses.add(stream.next().trim());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Can't find 8ball.txt!");
+            responses.add("Error loading 8ball.txt, can't respond :frowning:");
         }
     }
 }

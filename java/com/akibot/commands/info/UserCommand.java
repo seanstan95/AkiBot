@@ -1,53 +1,44 @@
 package com.akibot.commands.info;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * User
- * Returns relevant information about the @mentioned user(s).
- * Takes in format -ab user <@user>
- */
-
 import com.akibot.commands.BaseCommand;
 import com.akibot.core.bot.Main;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
-import java.awt.Color;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import static com.akibot.commands.Category.INFO;
 
 public class UserCommand extends BaseCommand {
     public UserCommand() {
-        super(INFO, "`user` - Outputs info about the mentioned user(s).", "`user <@user>`: Outputs info about the mentioned user(s).", "User");
+        super(INFO, "`user` - Displays info about the mentioned user.", "`user <@user>`: Displays " +
+                "info about the mentioned user.", "User");
     }
 
-    public void action(String[] args, MessageReceivedEvent event) {
-        Main.updateLog(event.getGuild().getName(), event.getGuild().getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
+    public void action(String[] args, GuildMessageReceivedEvent event) {
+        setup(event);
+        Main.updateLog(Main.guildMap.get(event.getGuild().getId()),
+                event.getAuthor().getName(), getName(), formatTime(null, event));
+        User user;
 
-        //Reads in all the mentioned users one at a time and embed outputs each one
         if (event.getMessage().getMentionedUsers().size() > 0) {
-            for (User user : event.getMessage().getMentionedUsers()) {
-                embedOutput(event, event.getGuild().getMember(user), user);
-            }
+            user = event.getMessage().getMentionedUsers().get(0);
+        } else if (args.length == 0) {
+            user = event.getAuthor();
         } else {
             event.getChannel().sendMessage("Invalid format! Type `-ab help user` for more info.").queue();
+            return;
         }
+        embedOutput(event, guildControl.getMember(user), user);
     }
 
-    private void embedOutput(MessageReceivedEvent event, Member member, User user) {
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-
-        embedBuilder.setAuthor("AkiBot " + Main.version, null, null);
-        embedBuilder.setColor(Color.decode("#9900CC"));
-        embedBuilder.addField("Nickname", member.getEffectiveName(), false);
-        embedBuilder.addField("Account Creation", formatTime(user.getCreationTime(), event), false);
-        embedBuilder.addField("Server Join Date", formatTime(member.getJoinDate(), event), false);
-        embedBuilder.setFooter("Command received on: " + formatTime(null, event), event.getAuthor().getAvatarUrl());
-        embedBuilder.setTitle("User: " + user.getName(), null);
-        embedBuilder.setThumbnail(user.getAvatarUrl());
-        event.getChannel().sendMessage(embedBuilder.build()).queue();
+    private void embedOutput(GuildMessageReceivedEvent event, Member member, User user) {
+        EmbedBuilder embed = fillEmbed(new EmbedBuilder(), event);
+        embed.addField("Nickname", member.getEffectiveName(), false);
+        embed.addField("Created account on:", formatTime(user.getTimeCreated(), event), false);
+        embed.addField("Joined server on:", formatTime(member.getTimeJoined(), event), false);
+        embed.setTitle("User: " + user.getName(), null);
+        embed.setThumbnail(user.getAvatarUrl());
+        event.getChannel().sendMessage(embed.build()).queue();
     }
 }

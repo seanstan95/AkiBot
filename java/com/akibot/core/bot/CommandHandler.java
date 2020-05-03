@@ -1,28 +1,24 @@
 package com.akibot.core.bot;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * CommandHandler
- * Handles the process of picking up a message, parsing it, and verifying for command existence.
- */
-
-import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import com.akibot.commands.BaseCommand;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.Arrays;
-
-import static com.akibot.commands.ModLevel.FULL;
+import java.util.HashMap;
 
 public class CommandHandler extends ListenerAdapter {
 
     public void onGuildJoin(GuildJoinEvent event) {
-        //Creates a guild object for every new guild that is joined (this is checked a second time in onMessageReceieved)
+        //Creates a guild object for every new guild that is joined (this is checked again in onGuildMessageReceieved)
         if (!Main.guildMap.containsKey(event.getGuild().getId())) {
-            GuildObject newGuildObject = new GuildObject(Main.playerManager, event.getGuild().getId(), event.getGuild().getName(), null, 35);
-            newGuildObject.changeMod(event.getGuild().getOwner().getUser().getId(), FULL, false, false);
+            GuildObject newGuildObject = new GuildObject(Main.playerManager.createPlayer(),
+                    event.getGuild().getId(), event.getGuild().getName(), null, 35);
+            newGuildObject.addMod(event.getGuild().getOwner().getUser().getId());
             Main.guildMap.put(event.getGuild().getId(), newGuildObject);
             System.out.println("Joining: " + event.getGuild().getName() + " (" + event.getGuild().getId() + ")");
             Main.updateGuilds(false, null, null);
@@ -33,20 +29,29 @@ public class CommandHandler extends ListenerAdapter {
         Main.updateGuilds(true, event.getGuild().getName(), event.getGuild().getId());
     }
 
-    public void onMessageReceived(MessageReceivedEvent event) {
+    public void onGuildMemberRemove(GuildMemberRemoveEvent event) {
+        if (Main.guildMap.containsKey(event.getGuild().getId())) {
+            GuildObject guildObj = Main.guildMap.get(event.getGuild().getId());
+            if (guildObj.getModList().contains(event.getUser().getId())) {
+                guildObj.removeMod(event.getGuild().getId());
+                Main.updateGuilds(false, event.getGuild().getName(), event.getGuild().getId());
+            }
+        }
+    }
+
+    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         //Checks that if the message received is a bot, ignore it and don't increment message count.
         if (event.getAuthor().isBot()) {
             return;
         }
 
-        if (event.getGuild() != null) {
-            if (!Main.guildMap.containsKey(event.getGuild().getId())) {
-                GuildObject newGuildObject = new GuildObject(Main.playerManager, event.getGuild().getId(), event.getGuild().getName(), null, 35);
-                newGuildObject.changeMod(event.getGuild().getOwner().getUser().getId(), FULL, false, false);
-                Main.guildMap.put(event.getGuild().getId(), newGuildObject);
-                System.out.println("Joining: " + event.getGuild().getName() + " (" + event.getGuild().getId() + ")");
-                Main.updateGuilds(false, null, null);
-            }
+        if (!Main.guildMap.containsKey(event.getGuild().getId())) {
+            GuildObject newGuildObject = new GuildObject(Main.playerManager.createPlayer(),
+                    event.getGuild().getId(), event.getGuild().getName(), null, 35);
+            newGuildObject.addMod(event.getGuild().getOwner().getUser().getId());
+            Main.guildMap.put(event.getGuild().getId(), newGuildObject);
+            System.out.println("Joining: " + event.getGuild().getName() + " (" + event.getGuild().getId() + ")");
+            Main.updateGuilds(false, null, null);
         }
 
         ++Main.messageCount;
@@ -55,28 +60,24 @@ public class CommandHandler extends ListenerAdapter {
         if (event.getMessage().getContentDisplay().startsWith("-ab")) {
             String message = event.getMessage().getContentDisplay().replaceFirst("-ab ", "");
             handleCommand(message.split("\\s+"), event);
-        } else if (event.getMessage().getContentRaw().startsWith("<@313955083584929792>") && event.getMessage().getContentDisplay().indexOf(' ') > 0) {
+        } else if (event.getMessage().getContentRaw().startsWith("<@!313955083584929792>")
+                && event.getMessage().getContentDisplay().indexOf(' ') > 0) {
             String message = event.getMessage().getContentDisplay().substring(event.getMessage().getContentDisplay().indexOf(' ')).trim();
             handleCommand(message.split("\\s+"), event);
         }
     }
 
-    private static void handleCommand(String[] args, MessageReceivedEvent event) {
-        //In the event that this message came via DM, check if it is one of the allowed ones
-        //More efficient to confirm here if the command in question is allowed in PMs vs. separately in each of the invalid commands
-        if (!event.getChannelType().isGuild() && !Main.PM_COMMANDS.contains(args[0])) {
-            event.getChannel().sendMessage("Sorry, this command can't be done in PMs.").queue();
-            return;
-        }
-
+    private static void handleCommand(String[] args, GuildMessageReceivedEvent event) {
         //Checks that the command list has a command associated with the parsed message.
         //If successful, calls action() of the corresponding command.
         boolean safe = false;
-        String saveKey = "";
+        String saveKey = "", saveCat = "";
 
-        for (String key : Main.commands.keySet()) {
-            if (key.equalsIgnoreCase(args[0].toLowerCase())) {
-                saveKey = key;
+        for (String category : Main.categories.keySet()) {
+            HashMap<String, BaseCommand> commands = Main.categories.get(category);
+            if (commands.containsKey(args[0])) {
+                saveKey = args[0];
+                saveCat = category;
                 safe = true;
                 break;
             }
@@ -84,9 +85,9 @@ public class CommandHandler extends ListenerAdapter {
 
         if (safe) {
             ++Main.commandCount;
-            Main.commands.get(saveKey).action(Arrays.copyOfRange(args, 1, args.length), event);
+            Main.categories.get(saveCat).get(saveKey).action(Arrays.copyOfRange(args, 1, args.length), event);
         } else {
-            event.getChannel().sendMessage("Invalid command name! Type -ab help commands for a list of commands.").queue();
+            event.getChannel().sendMessage("Invalid command name! Type `-ab help commands` for a list of commands.").queue();
         }
     }
 }

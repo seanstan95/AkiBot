@@ -1,76 +1,65 @@
 package com.akibot.commands.music;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * Song
- * Outputs info about the currently playing song (title, url link, position/duration, and who requested it).
- * Takes in format -ab song
- */
-
 import com.akibot.commands.BaseCommand;
 import com.akibot.core.audio.TrackInfo;
-import com.akibot.core.bot.GuildObject;
-import com.akibot.core.bot.Main;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
-import java.awt.Color;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import static com.akibot.commands.Category.MUSIC;
 
 public class SongCommand extends BaseCommand {
     public SongCommand() {
-        super(MUSIC, "`song` - Outputs current song info.", "`song`: Outputs info about the currently playing track.", "Song");
+        super(MUSIC, "`song` - Displays current song info.", "`song`: Displays info about the " +
+                "currently playing song.", "Song");
     }
 
-    public void action(String[] args, MessageReceivedEvent event) {
-        GuildObject guild = Main.guildMap.get(event.getGuild().getId());
-        Main.updateLog(guild.getName(), guild.getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
+    public void action(String[] args, GuildMessageReceivedEvent event) {
+        setup(event);
+
+        //Ensures AkiBot is connected to voice before continuing
+        if (!isVoiceOk(event.getGuild().getSelfMember(), event.getMember(), event.getChannel())) {
+            return;
+        }
 
         if (args.length == 0) {
-            //Ensures that there is a currentTrack. If so, continue to embedOutput to retrieve track info
-            if (guild.getPlayer().getPlayingTrack() == null) {
+            //Ensures that there is a currently playing track
+            if (guildObj.getPlayer().getPlayingTrack() == null) {
                 event.getChannel().sendMessage("No song is playing!").queue();
             } else {
-                embedOutput(guild.getPlayer().getPlayingTrack(), event);
+                embedOutput(guildObj.getPlayer().getPlayingTrack(), event);
             }
         } else {
             event.getChannel().sendMessage("Invalid format! Type `-ab help song` for more info.").queue();
         }
     }
 
-    private void embedOutput(AudioTrack track, MessageReceivedEvent event) {
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-
+    private void embedOutput(AudioTrack track, GuildMessageReceivedEvent event) {
+        EmbedBuilder embedBuilder = fillEmbed(new EmbedBuilder(), event);
         TrackInfo trackInfo = (TrackInfo) track.getUserData();
+
         long duration = track.getDuration(), currentTime = track.getPosition();
-        String durationMinutes = Long.toString((duration / 60000) % 60), durationSeconds = Long.toString((duration / 1000) % 60);
-        String currentMinutes = Long.toString((currentTime / 60000) % 60), currentSeconds = Long.toString((currentTime / 1000) % 60);
+        String durationMin = Long.toString(duration / 1000 / 60), durationSec = Long.toString(duration / 1000 % 60);
+        String currentMin = Long.toString(currentTime / 1000 / 60), currentSec = Long.toString(currentTime / 1000 % 60);
 
         //Padding for output, if necessary
-        if (Integer.parseInt(durationMinutes) < 10) {
-            durationMinutes = "0" + durationMinutes;
+        if (Long.parseLong(durationMin) < 10) {
+            durationMin = "0" + durationMin;
         }
-        if (Integer.parseInt(durationSeconds) < 10) {
-            durationSeconds = "0" + durationSeconds;
+        if (Long.parseLong(durationSec) < 10) {
+            durationSec = "0" + durationSec;
         }
-        if (Integer.parseInt(currentMinutes) < 10) {
-            currentMinutes = "0" + currentMinutes;
+        if (Long.parseLong(currentMin) < 10) {
+            currentMin = "0" + currentMin;
         }
-        if (Integer.parseInt(currentSeconds) < 10) {
-            currentSeconds = "0" + currentSeconds;
+        if (Long.parseLong(currentSec) < 10) {
+            currentSec = "0" + currentSec;
         }
 
-        embedBuilder.setAuthor("AkiBot " + Main.version, null, null);
-        embedBuilder.setColor(Color.decode("#9900CC"));
         embedBuilder.addField("Song Title:", track.getInfo().title, false);
         embedBuilder.addField("Song Link:", track.getInfo().uri, false);
-        embedBuilder.addField("Current Position:", currentMinutes + ":" + currentSeconds + "/" + durationMinutes + ":" + durationSeconds, false);
+        embedBuilder.addField("Current Position:", currentMin + ":" + currentSec + "/" + durationMin + ":" + durationSec, false);
         embedBuilder.addField("Requested by:", trackInfo.getRequester(), false);
-        embedBuilder.setFooter("Command received on: " + formatTime(null, event), event.getAuthor().getAvatarUrl());
-        embedBuilder.setThumbnail(Main.THUMBNAIL);
         event.getChannel().sendMessage(embedBuilder.build()).queue();
     }
 }

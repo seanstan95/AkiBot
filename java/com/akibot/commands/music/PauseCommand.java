@@ -1,48 +1,37 @@
 package com.akibot.commands.music;
 
-/*
- * AkiBot v3.1.5 by PhoenixAki: music + moderation bot for usage in Discord servers.
- *
- * Pause
- * Pauses the current track.
- * Takes in format -ab pause
- */
-
 import com.akibot.commands.BaseCommand;
-
-import com.akibot.core.bot.GuildObject;
-import com.akibot.core.bot.Main;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import static com.akibot.commands.Category.MUSIC;
 
 public class PauseCommand extends BaseCommand {
     public PauseCommand() {
-        super(MUSIC, "`pause` - Pauses the current track.", "`pause`: Pauses the current track. To resume a paused track, type `-ab play`.", "Pause");
+        super(MUSIC, "`pause` - Pauses the current song.", "`pause`: Pauses the current song. " +
+                "To resume playback, use `-ab play`.", "Pause");
     }
 
-    public void action(String[] args, MessageReceivedEvent event) {
-        GuildObject guild = Main.guildMap.get(event.getGuild().getId());
-        Main.updateLog(guild.getName(), guild.getId(), event.getAuthor().getName(), getName(), formatTime(null, event));
+    public void action(String[] args, GuildMessageReceivedEvent event) {
+        setup(event);
 
         //Ensures AkiBot is connected to voice before continuing
-        if (!isVoiceOk(event.getGuild().getSelfMember().getVoiceState(), event.getMember().getVoiceState(), event.getChannel())) {
+        if (!isVoiceOk(event.getGuild().getSelfMember(), event.getMember(), event.getChannel())) {
             return;
         }
 
         if (args.length == 0) {
-            //Ensures there is a playing song before continuing
-            if (guild.getPlayer().getPlayingTrack() == null) {
+            //Ensures there is a playing track before continuing
+            if (guildObj.getPlayer().getPlayingTrack() == null) {
                 event.getChannel().sendMessage("No song playing!").queue();
                 return;
             }
 
             //If already paused, don't do anything. Otherwise, pause the track.
-            if (guild.getPlayer().isPaused()) {
-                event.getChannel().sendMessage("Track is already paused! Type `-ab play` to resume.").queue();
+            if (guildObj.getPlayer().isPaused()) {
+                event.getChannel().sendMessage("Song is already paused! Type `-ab play` to resume.").queue();
             } else {
-                guild.getPlayer().setPaused(true);
-                event.getChannel().sendMessage("Track paused.").queue();
+                guildObj.getPlayer().setPaused(true);
+                event.getChannel().sendMessage("Song paused.").queue();
             }
         } else {
             event.getChannel().sendMessage("Invalid format! Type `-ab help pause` for more info.").queue();
