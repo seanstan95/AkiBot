@@ -14,63 +14,62 @@ Please contact me on Discord at Phoenix#0353 if you would like me to turn the bo
 AkiBot's commands can be summarized into 4 categories: Administration, Fun, Information, and Music. All commands to the bot are prefaced 
 by the phrase "-ab", or by saying @AkiBot in place of "-ab".
 
-### Administration (requires "Full" mod level)
-**ban [@user]**: Bans the given user from the current server.
+### Administration
+**ban <@user>**: Bans the mentioned user from the server.
 
-**create [text/voice/role] [name]**: Creates a text, voice, or role with the given name.
+**create <text/voice/role> <name>**: Creates a new text/voice channel or role.
   
-**delete [text/voice/role] [name]**: Deletes the text/voice channel, or role, with the given name.
+**delete <text/voice/role> <name>**: Deletes a text/voice channel or role.
 
-**kick [@user]**: Kicks the given user from the current server.
+**kick <@user>**: Kicks the mentioned user from the server.
 
-**leave**: Makes AkiBot leave the current server.
+**leave**: Makes AkiBot leave the server.
 
-**mod [add/remove/list] [music/full] [@user]**: Adds/removes a mod to the bot, or lists the current mods. Music mod level is required to 
-do music commands; Full mod level is required to do administration commands.
+**mod <add/remove/list> <@user>**: Manages AkiBot mods for the server.
 
-**mute [@user]**: Mutes the given user in a voice channel.
+**mute <@user>**: Mutes a user in voice.
 
-**nickname [newNickname] [@user]**: Forces the given nickname on the given user.
+**nickname <newNickname> <@user>**: Nicknames a user.
   
-**prune [days]**: Kicks all users in the server who have been offline for at least the given number of days.
+**prune <days>**: Kicks inactive users from the server.
   
-**unmute [@user]**: Unmutes the given user in a voice channel.
+**unmute <@user>**: Unmutes a user in voice.
 
 ### Fun
-**8ball [message]**: Returns a random result simulating an 8-ball to the given message.
+**8ball <message>**: Responds with an 8-ball response.
   
-**roll [number]**: Rolls a 6-sided dice a given number of times (defaults to once if no number is given).
+**roll <number>**: Rolls a 6-sided dice.
   
-**rps [rock/paper/scissors]**: Plays a game of Rock, Paper, Scissors with AkiBot.
+**rps <rock/paper/scissors>**: Plays a round of Rock, Paper, Scissors with AkiBot.
 
 ### Info
-**commands [admin/fun/info/music]**: Prints a list of commands on a per-category basis.
+**commands <admin/fun/info/music>**: Displays a list of commands per-category.
 
-**help [commandName]**: Prints the help text for a given command.
+**help <commandName>**: Gives basic information about AkiBot, or displays help text for a command.
   
-**server**: Prints information about the current server, such as creation date and member count.
+**server**: Displays information about the server.
 
-**status**: Prints information about AkiBot's current status.
+**status**: Displays information about AkiBot.
 
-**user [@user]**: Prints information about the given user.
+**user <@user>**: Displays info about the mentioned user.
 
-### Music (some commands require "Music" or "Full" mod level)
-**pause**: Pauses a currently playing track.
+### Music
+**pause**: Pauses the current song.
 
-**play [link/searchTerms]**: Unpauses a track, plays a track via direct link, or searches youtube for a track given search terms.
+**play <link/searchTerms>**: Queues a song for playback, or unpauses a paused song.
 
-**queue [reset]**: Prints (up to) 10 tracks from the current queue, or empties the queue.
+**queue <reset>**: Displays up to 10 songs from the queue, or empties the queue.
   
-**remove [trackNumber]**: Removes a track with the given track number from the queue.
+**remove <songNumber>**: Removes a song from the queue.
   
-**seek [mm:ss]**: Skips to the given time in the playing track. 
+**seek <mm:ss>**: Skips to the given time in the current song. 
 
-**skip**: Skips the currently playing track.
+**skip**: Skips the current song.
 
-**song**: Prints information about the currently playing track.
+**song**: Displays information about the current song.
 
-**stop**: Stops the currently playing track.
+**stop**: Stops the current song.
 
-**voice [join/leave]**: Summons or dismisses AkiBot to/from the current voice channel the calling user is in.
+**voice <join/leave>**: Controls AkiBot joining/leaving voice channels.
 
-**volume [newVolume]**: Changes the volume of the currently playing track to the given new volume.
+**volume <newVolume>**: Changes the current volume.
