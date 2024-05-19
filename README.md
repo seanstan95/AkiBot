@@ -5,10 +5,7 @@ than what I have made in classes before. I spent most of my free time from March
 more features and commands as I went. I have placed a high priority on maintaining very clean and efficient code wherever possible, 
 which always brought me back to try to improve the code even more over time.
 
-You can invite AkiBot to a Discord server using this link: https://discordapp.com/oauth2/authorize?client_id=313955083584929792&permissions=8&scope=bot
-
-**NOTE**: I do not regularly turn the bot online, as this was primarily for my own learning and not for actual public release. 
-Please contact me on Discord at Phoenix#0353 if you would like me to turn the bot on for you to try it out.
+**NOTE**: This bot is no longer functional due to Discord overhauling their bot system to use slash commands. This codebase has not been updated to use those commands or a more modern updated wrapper library. I may create a new version of AkiBot in the future to learn how to do that all, but this version will exist on GitHub for archiving sake.
 
 ## Commands
 AkiBot's commands can be summarized into 4 categories: Administration, Fun, Information, and Music. All commands to the bot are prefaced 
